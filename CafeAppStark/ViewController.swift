@@ -92,8 +92,8 @@ class ViewController: UIViewController, UITextFieldDelegate {
                 AmountAddField.placeholder = "Price Here"
             }
         } else {
-            fooods.append(CartAddField.text!)
-            prices.append(Double(AmountAddField.text!)!)
+//            fooods.append(CartAddField.text!)
+//            prices.append(Double(AmountAddField.text!)!)
         }\
         errorAmount = 0
         return CartAddField.resignFirstResponder()

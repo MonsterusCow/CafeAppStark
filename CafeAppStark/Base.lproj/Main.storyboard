@@ -127,21 +127,6 @@
             </objects>
             <point key="canvasLocation" x="46.564885496183201" y="-2.1126760563380285"/>
         </scene>
-        <!--View Controller-->
-        <scene sceneID="zP2-FY-hf8">
-            <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="GeA-Sp-HHs" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-                <viewController id="HfU-kC-q5y" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="o3k-Ta-TEP">
-                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <viewLayoutGuide key="safeArea" id="sxt-yJ-04V"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                    </view>
-                </viewController>
-            </objects>
-            <point key="canvasLocation" x="923" y="16"/>
-        </scene>
     </scenes>
     <resources>
         <image name="cafe" width="1000" height="714"/>

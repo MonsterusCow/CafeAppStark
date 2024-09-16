@@ -16,6 +16,8 @@ class ViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var CartAddField: UITextField!
     @IBOutlet weak var AmountAddField: UITextField!
     @IBOutlet weak var adminField: UITextField!
+    @IBOutlet weak var AddButton: UIButton!
+    @IBOutlet weak var DeleteButton: UIButton!
     
     
     var fooods: [String] = ["Avocado", "Coffee", "Muffin", "Scone", "Poptart"]
@@ -37,13 +39,16 @@ class ViewController: UIViewController, UITextFieldDelegate {
         for i in 0..<prices.count{
             PricesView.text = "\(PricesView.text!)\n \(i+1)) $\(prices[i])"
         }
+        AddButton.isHidden = true
+        DeleteButton.isHidden = true
+        AddButton.isEnabled = false
+        DeleteButton.isEnabled = false
     }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         
             if adminField.text != "admincode" {
                 if adminField.text != "nomoreadmin" {
-                if !adminmode{
                     if CartAddField.text?.replacingOccurrences(of: " ", with: "") != "" && AmountAddField.text?.replacingOccurrences(of: " ", with: "") != ""{
                         for i in 0..<fooods.count{
                             if Int(AmountAddField.text!) != nil && Int(AmountAddField.text!)! >= 1{
@@ -87,55 +92,23 @@ class ViewController: UIViewController, UITextFieldDelegate {
                         CartAddField.text = ""
                         AmountAddField.text = ""
                     }
-                    //adminmode
-                } else {
-                    if CartAddField.text?.replacingOccurrences(of: " ", with: "") != "" && AmountAddField.text?.replacingOccurrences(of: " ", with: "") != ""{
-                        if Double(AmountAddField.text!) != nil && Double(AmountAddField.text!)! >= 1.0{
-                            var continueee = true
-                            for i in 0..<fooods.count {
-                                if fooods[i] == CartAddField.text?.replacingOccurrences(of: " ", with: "").lowercased(){
-                                    continueee = false
-                                } else {
-                                    CartAddField.text = ""
-                                    nuhUH(alertName: "That item is already on the menu")
-                                    continueee = false
-                                    break
-                                }
-                            }
-                            if continueee {
-                                fooods.append(CartAddField.text!)
-                                prices.append(Double(AmountAddField.text!)!)
-                                CartAddField.text = ""
-                                AmountAddField.text = ""
-                                FoodsView.text = ""
-                                PricesView.text = ""
-                                for i in 0..<fooods.count{
-                                    FoodsView.text = "\(FoodsView.text!)\n \(i+1)) \(fooods[i])"
-                                }
-                                for i in 0..<prices.count{
-                                    PricesView.text = "\(PricesView.text!)\n \(i+1)) $\(prices[i])"
-                                }
-                            }
-                        }else {
-                            nuhUH(alertName: "There are more than numbers in the Price field, or a negative or 0")
-                            AmountAddField.text = ""
-                        }
-                    } else {
-                        nuhUH(alertName: "One of the typing boxes are empty")
-                        CartAddField.text = ""
-                        AmountAddField.text = ""
-                    }
-                }
                     //nomoreadmin
                 } else {
-                    adminmode = false
                     adminField.text = ""
                     CartAddField.placeholder = "Food Here"
                     AmountAddField.placeholder = "Amount Here"
+                    AddButton.isHidden = true
+                    DeleteButton.isHidden = true
+                    AddButton.isEnabled = false
+                    DeleteButton.isEnabled = false
                     adminField.resignFirstResponder()
                 }
+                //admincode
             } else {
-                adminmode = true
+                AddButton.isHidden = false
+                DeleteButton.isHidden = false
+                AddButton.isEnabled = true
+                DeleteButton.isEnabled = true
                 adminField.text = ""
                 CartAddField.placeholder = "Menu Item Here"
                 AmountAddField.placeholder = "Price Here"
@@ -161,5 +134,73 @@ class ViewController: UIViewController, UITextFieldDelegate {
             self.present(alert, animated: true)
             
         }
+    @IBAction func addButton(_ sender: UIButton) {
+        var continueee = true
+        for i in 0..<fooods.count {
+            if fooods[i] == CartAddField.text?.replacingOccurrences(of: " ", with: "").lowercased(){
+                nuhUH(alertName: "That is already on the menu")
+                continueee = false
+                break
+            }
+        }
+        if continueee{
+            if CartAddField.text?.replacingOccurrences(of: " ", with: "") != "" && AmountAddField.text?.replacingOccurrences(of: " ", with: "") != ""{
+                if Double(AmountAddField.text!) != nil && Double(AmountAddField.text!)! >= 1.0{
+                    
+                    fooods.append(CartAddField.text!)
+                    prices.append(Double(AmountAddField.text!)!)
+                    CartAddField.resignFirstResponder()
+                    AmountAddField.resignFirstResponder()
+                    CartAddField.text = ""
+                    AmountAddField.text = ""
+                    FoodsView.text = ""
+                    PricesView.text = ""
+                    for i in 0..<fooods.count{
+                        FoodsView.text = "\(FoodsView.text!)\n \(i+1)) \(fooods[i])"
+                    }
+                    for i in 0..<prices.count{
+                        PricesView.text = "\(PricesView.text!)\n \(i+1)) $\(prices[i])"
+                    }
+                }else {
+                    nuhUH(alertName: "There are more than numbers in the Price field, or a negative or 0")
+                    AmountAddField.text = ""
+                }
+            } else {
+                nuhUH(alertName: "One of the typing boxes are empty")
+                CartAddField.text = ""
+                AmountAddField.text = ""
+            }
+        }
+    }
+    @IBAction func deleteButton(_ sender: UIButton) {
+        if CartAddField.text?.replacingOccurrences(of: " ", with: "") != "" && AmountAddField.text?.replacingOccurrences(of: " ", with: "") != ""{
+            if Double(AmountAddField.text!) != nil && Double(AmountAddField.text!)! >= 1.0{
+                for i in 0..<fooods.count {
+                    if fooods[i] == CartAddField.text?.replacingOccurrences(of: " ", with: "").lowercased(){
+                        CartAddField.text = ""
+                        AmountAddField.text = ""
+                        fooods.remove(at: i)
+                        prices.remove(at: i)
+                        FoodsView.text = ""
+                        PricesView.text = ""
+                        for i in 0..<fooods.count{
+                            FoodsView.text = "\(FoodsView.text!)\n \(i+1)) \(fooods[i])"
+                        }
+                        for i in 0..<prices.count{
+                            PricesView.text = "\(PricesView.text!)\n \(i+1)) $\(prices[i])"
+                        }
+                        break
+                    }
+                }
+            }else {
+                nuhUH(alertName: "There are more than numbers in the Price field, or a negative or 0")
+                AmountAddField.text = ""
+            }
+        } else {
+            nuhUH(alertName: "One of the typing boxes are empty")
+            CartAddField.text = ""
+            AmountAddField.text = ""
+        }
+    }
 }
 

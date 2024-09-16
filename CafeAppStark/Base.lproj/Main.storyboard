@@ -74,7 +74,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Your AMAZING cart" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="v5C-fb-Ddr">
-                                <rect key="frame" x="113" y="513" width="165" height="33"/>
+                                <rect key="frame" x="113" y="512" width="165" height="33"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" systemColor="opaqueSeparatorColor"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
@@ -109,15 +109,41 @@
                                 <color key="textColor" red="0.82352948189999997" green="0.71372550729999995" blue="0.52549022440000004" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kOo-sx-9F7">
+                                <rect key="frame" x="283" y="513" width="74" height="35"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" systemColor="opaqueSeparatorColor"/>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="plain" title="Delete">
+                                    <color key="baseForegroundColor" systemColor="labelColor"/>
+                                </buttonConfiguration>
+                                <connections>
+                                    <action selector="deleteButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="VCx-08-YF0"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kGg-Tc-O82">
+                                <rect key="frame" x="34" y="513" width="55" height="35"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" systemColor="opaqueSeparatorColor"/>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="plain" title="Add">
+                                    <color key="baseForegroundColor" systemColor="labelColor"/>
+                                </buttonConfiguration>
+                                <connections>
+                                    <action selector="addButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="gl6-1U-82Y"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     </view>
                     <connections>
+                        <outlet property="AddButton" destination="kGg-Tc-O82" id="X4N-kg-vKy"/>
                         <outlet property="AmountAddField" destination="Kcl-LA-awo" id="CLN-pI-NMQ"/>
                         <outlet property="CartAddField" destination="KS5-gy-8yn" id="DZX-mq-UaF"/>
                         <outlet property="CartFoods" destination="apY-kK-1B8" id="ZN4-ci-Kos"/>
                         <outlet property="CartPrices" destination="FM1-wQ-aoj" id="zyF-P4-Elj"/>
+                        <outlet property="DeleteButton" destination="kOo-sx-9F7" id="xWa-3Z-Id0"/>
                         <outlet property="FoodsView" destination="5FU-3M-TOM" id="Lrc-Us-ENH"/>
                         <outlet property="PricesView" destination="TK6-bd-fYS" id="WQm-bx-NI6"/>
                         <outlet property="adminField" destination="m5M-ct-4zs" id="XOw-xp-wxK"/>

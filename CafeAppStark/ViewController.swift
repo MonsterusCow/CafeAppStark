@@ -18,6 +18,7 @@ class ViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var adminField: UITextField!
     @IBOutlet weak var AddButton: UIButton!
     @IBOutlet weak var DeleteButton: UIButton!
+    @IBOutlet weak var InstructionsLable: UILabel!
     
     
     var fooods: [String] = ["Avocado", "Coffee", "Muffin", "Scone", "Poptart"]
@@ -49,54 +50,56 @@ class ViewController: UIViewController, UITextFieldDelegate {
         
             if adminField.text != "admincode" {
                 if adminField.text != "nomoreadmin" {
-                    if CartAddField.text?.replacingOccurrences(of: " ", with: "") != "" && AmountAddField.text?.replacingOccurrences(of: " ", with: "") != ""{
-                        for i in 0..<fooods.count{
-                            if Int(AmountAddField.text!) != nil && Int(AmountAddField.text!)! >= 1{
-                                if CartAddField.text?.lowercased().replacingOccurrences(of: " ", with: "") == fooods[i].lowercased().replacingOccurrences(of: " ", with: ""){
-                                    var continuee = true
-                                    for (key,_) in cart {
-                                        if key == fooods[i]{
-                                            continuee = false
-                                            nuhUH(alertName: "You already have that item in your cart")
+                    if !adminmode{
+                        if CartAddField.text?.replacingOccurrences(of: " ", with: "") != "" && AmountAddField.text?.replacingOccurrences(of: " ", with: "") != ""{
+                            for i in 0..<fooods.count{
+                                if Int(AmountAddField.text!) != nil && Int(AmountAddField.text!)! >= 1{
+                                    if CartAddField.text?.lowercased().replacingOccurrences(of: " ", with: "") == fooods[i].lowercased().replacingOccurrences(of: " ", with: ""){
+                                        var continuee = true
+                                        for (key,_) in cart {
+                                            if key == fooods[i]{
+                                                continuee = false
+                                                nuhUH(alertName: "You already have that item in your cart")
+                                                CartAddField.text = ""
+                                                AmountAddField.text = ""
+                                                break
+                                            }
+                                        }
+                                        if continuee{
+                                            CartFoods.text =  "\(CartFoods.text!)\n \(AmountAddField.text!) \(fooods[i])"
+                                            if Int(AmountAddField.text!)! > 1 {
+                                                CartFoods.text = "\(CartFoods.text!)s"
+                                            }
+                                            CartPrices.text =  "\(CartPrices.text!)\n $\(prices[i])"
+                                            cart["\(fooods[i])"] = prices[i]
                                             CartAddField.text = ""
                                             AmountAddField.text = ""
                                             break
                                         }
-                                    }
-                                    if continuee{
-                                        CartFoods.text =  "\(CartFoods.text!)\n \(AmountAddField.text!) \(fooods[i])"
-                                        if Int(AmountAddField.text!)! > 1 {
-                                            CartFoods.text = "\(CartFoods.text!)s"
+                                    } else {
+                                        errorAmount = errorAmount+1
+                                        if errorAmount == fooods.count{
+                                            nuhUH(alertName: "That is not a food available or you have typed a number here instead of a food")
+                                            CartAddField.text = ""
+                                            break
                                         }
-                                        CartPrices.text =  "\(CartPrices.text!)\n $\(prices[i])"
-                                        cart["\(fooods[i])"] = prices[i]
-                                        CartAddField.text = ""
-                                        AmountAddField.text = ""
-                                        break
                                     }
                                 } else {
-                                    errorAmount = errorAmount+1
-                                    if errorAmount == fooods.count{
-                                        nuhUH(alertName: "That is not a food available or you have typed a number here instead of a food")
-                                        CartAddField.text = ""
-                                        break
-                                    }
+                                    nuhUH(alertName: "There are more than numbers in the Amount field, you put a decimal, or a negative or 0")
+                                    AmountAddField.text = ""
                                 }
-                            } else {
-                                nuhUH(alertName: "There are more than numbers in the Amount field, you put a decimal, or a negative or 0")
-                                AmountAddField.text = ""
                             }
+                        } else {
+                            nuhUH(alertName: "One of the typing boxes are empty")
                         }
-                    } else {
-                        nuhUH(alertName: "One of the typing boxes are empty")
-                        CartAddField.text = ""
-                        AmountAddField.text = ""
                     }
                     //nomoreadmin
                 } else {
+                    adminmode = false
                     adminField.text = ""
                     CartAddField.placeholder = "Food Here"
                     AmountAddField.placeholder = "Amount Here"
+                    InstructionsLable.text = "Type how much and what you want\nPress enter to add"
                     AddButton.isHidden = true
                     DeleteButton.isHidden = true
                     AddButton.isEnabled = false
@@ -105,6 +108,7 @@ class ViewController: UIViewController, UITextFieldDelegate {
                 }
                 //admincode
             } else {
+                adminmode = true
                 AddButton.isHidden = false
                 DeleteButton.isHidden = false
                 AddButton.isEnabled = true
@@ -112,11 +116,14 @@ class ViewController: UIViewController, UITextFieldDelegate {
                 adminField.text = ""
                 CartAddField.placeholder = "Menu Item Here"
                 AmountAddField.placeholder = "Price Here"
+                InstructionsLable.text = "Press enter to get rid of keyboard and press one of the buttons"
                 adminField.resignFirstResponder()
             }
-        errorAmount = 0
-        return CartAddField.resignFirstResponder()
-    }
+            errorAmount = 0
+            AmountAddField.resignFirstResponder()
+            return CartAddField.resignFirstResponder()
+        }
+    
     
     func textFieldDidEndEditing(_ textField: UITextField) {
         CartAddField.resignFirstResponder()
@@ -137,8 +144,10 @@ class ViewController: UIViewController, UITextFieldDelegate {
     @IBAction func addButton(_ sender: UIButton) {
         var continueee = true
         for i in 0..<fooods.count {
-            if fooods[i] == CartAddField.text?.replacingOccurrences(of: " ", with: "").lowercased(){
+            if fooods[i].lowercased() == CartAddField.text?.replacingOccurrences(of: " ", with: "").lowercased(){
                 nuhUH(alertName: "That is already on the menu")
+                CartAddField.text = ""
+                AmountAddField.text = ""
                 continueee = false
                 break
             }
@@ -173,10 +182,9 @@ class ViewController: UIViewController, UITextFieldDelegate {
         }
     }
     @IBAction func deleteButton(_ sender: UIButton) {
-        if CartAddField.text?.replacingOccurrences(of: " ", with: "") != "" && AmountAddField.text?.replacingOccurrences(of: " ", with: "") != ""{
-            if Double(AmountAddField.text!) != nil && Double(AmountAddField.text!)! >= 1.0{
+        if CartAddField.text?.replacingOccurrences(of: " ", with: "") != ""{
                 for i in 0..<fooods.count {
-                    if fooods[i] == CartAddField.text?.replacingOccurrences(of: " ", with: "").lowercased(){
+                    if fooods[i].lowercased() == CartAddField.text?.replacingOccurrences(of: " ", with: "").lowercased(){
                         CartAddField.text = ""
                         AmountAddField.text = ""
                         fooods.remove(at: i)
@@ -192,12 +200,8 @@ class ViewController: UIViewController, UITextFieldDelegate {
                         break
                     }
                 }
-            }else {
-                nuhUH(alertName: "There are more than numbers in the Price field, or a negative or 0")
-                AmountAddField.text = ""
-            }
         } else {
-            nuhUH(alertName: "One of the typing boxes are empty")
+            nuhUH(alertName: "You need to put a food")
             CartAddField.text = ""
             AmountAddField.text = ""
         }

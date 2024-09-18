@@ -145,6 +145,7 @@
                         <outlet property="CartPrices" destination="FM1-wQ-aoj" id="zyF-P4-Elj"/>
                         <outlet property="DeleteButton" destination="kOo-sx-9F7" id="xWa-3Z-Id0"/>
                         <outlet property="FoodsView" destination="5FU-3M-TOM" id="Lrc-Us-ENH"/>
+                        <outlet property="InstructionsLable" destination="r3Q-wk-qaV" id="Zdg-xn-Lhe"/>
                         <outlet property="PricesView" destination="TK6-bd-fYS" id="WQm-bx-NI6"/>
                         <outlet property="adminField" destination="m5M-ct-4zs" id="XOw-xp-wxK"/>
                     </connections>
